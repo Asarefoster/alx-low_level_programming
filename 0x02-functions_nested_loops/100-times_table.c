@@ -1,9 +1,8 @@
-#include "main.h"
+#include "main.h"i
 /**
   *print_times_table - prints the times table  of the input
   *starting with 0
   *@n: the value of the time table to be printed.
-  *Return: always 0
   */
 
 void print_times_table(int n);
