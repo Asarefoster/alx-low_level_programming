@@ -7,7 +7,7 @@
 */
 void print_alphabet(void);
 {
-	ibt i;
+	int i;
 
 	for (i = 97; i <= 122; i++)
 	{
