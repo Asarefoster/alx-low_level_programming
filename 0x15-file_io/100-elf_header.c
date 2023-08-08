@@ -11,9 +11,9 @@ void print_magic(unsigned char *e_ident);
 void print_class(unsigned char *e_ident);
 void print_data(unsigned char *e_ident);
 void print_version(unsigned char *e_ident);
-void print_abi(unsigned char *e_ident);
-void print_osabi(unsigned char *e_ident);
-void print_type(unsigned int e_type, unsigned char *e_ident);
+void print_abi(unsigned char *_ident);
+void print_osabi(unsigned char *_ident);
+void print_type(unsigned int e_type, unsigned char *_ident);
 void print_entry(unsigned long int e_entry, unsigned char *e_ident);
 void close_elf(int elf);
 
@@ -136,14 +136,14 @@ void print_version(unsigned char *e_ident)
 
 /**
  *print_osabi - prints the OS/ABI of an ELF header
- *@e_ident: a pointer to an array containing the ELF version
+ *@_ident: a pointer to an array containing the ELF version
  */
 
-void print_osabi(unsigned char *e_ident)
+void print_osabi(unsigned char *_ident)
 {
 	printf(" OS/ABI: ");
 
-	switch (e_ident[EI_OSABI])
+	switch (_ident[EI_OSABI])
 	{
 	case ELFOSABI_NONE:
 		printf("UNIX - System V\n");
@@ -176,29 +176,29 @@ void print_osabi(unsigned char *e_ident)
 		printf("Standalone App\n");
 		break;
 	default:
-		printf("<unknown: %x>\n", e_ident[EI_OSABI]);
+		printf("<unknown: %x>\n", _ident[EI_OSABI]);
 	}
 }
 
 /**
  *print_abi - prints the ABI version of an ELF header
- *@e_ident: a pointer to an array containing the ELF ABI version
+ *@_ident: a pointer to an array containing the ELF ABI version
  */
 
-void print_abi(unsigned char *e_ident)
+void print_abi(unsigned char *_ident)
 {
-	printf(" ABI Version: %d\n", e_ident[EI_ABIVERSION]);
+	printf(" ABI Version: %d\n", _ident[EI_ABIVERSION]);
 }
 
 /**
  *print_type - prints the type of an ELF header
  *@e_type: The ELF type
- *@e_ident: a pointer to an array containing the ELF class
+ *@_ident: a pointer to an array containing the ELF class
  */
 
-void print_type(unsigned int e_type, unsigned char *e_ident)
+void print_type(unsigned int e_type, unsigned char *_ident)
 {
-	if (e_ident[EI_DATA] == ELFDATA2MSB)
+	if (_ident[EI_DATA] == ELFDATA2MSB)
 		e_type >>= 8;
 
 	printf(" Type: ");
@@ -258,8 +258,7 @@ void close_elf(int elf)
 {
 	if (close(elf) == -1)
 	{
-		dprintf(STDERR_FILENO,
-			"Error: Can't close fd %d\n", elf);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", elf);
 		exit(98);
 	}
 }
