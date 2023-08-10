@@ -1,4 +1,3 @@
-#include "main.h"
 #include <elf.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -6,6 +5,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "main.h"
 
 /* Betty: check if the provided ELF identifier is valid */
 void check_elf(unsigned char *e_ident);
@@ -140,8 +140,7 @@ void print_data(unsigned char *e_ident)
 
 void print_version(unsigned char *e_ident)
 {
-	 printf(" Version: %d",
-			  e_ident[EI_VERSION]);
+	 printf(" Version: %d (current)\n", e_ident[EI_VERSION]);
 
 	switch (e_ident[EI_VERSION])
 	{
@@ -262,10 +261,13 @@ void print_entry(unsigned long int e_entry, unsigned char *e_ident)
 	}
 
 	if (e_ident[EI_CLASS] == ELFCLASS32)
+	{
 		printf("%#x\n", (unsigned int)e_entry);
-
+	}
 	else
+	{
 		printf("%#lx\n", e_entry);
+	}
 }
 
 /**
